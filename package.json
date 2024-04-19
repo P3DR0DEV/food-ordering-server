@@ -1,0 +1,27 @@
+{
+  "name": "food-ordering-server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "lint": "eslint . "
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@rotrenanoliveira/eslint-config": "^1.1.0",
+    "@types/node": "20.12.5",
+    "eslint": "8.57.0",
+    "tsx": "4.7.2",
+    "typescript": "5.4.4",
+    "vite": "5.2.8",
+    "vite-tsconfig-paths": "4.3.2",
+    "vitest": "1.4.0"
+  },
+  "dependencies": {
+    "fastify": "^4.26.2"
+  }
+}
