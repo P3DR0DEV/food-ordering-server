@@ -2,8 +2,6 @@ import { Entity } from '@/core/entities/entity'
 import { UniqueEntityID } from '@/core/entities/unique-entity-id'
 import { Optional } from '@/core/types/optional'
 
-import { HashPassword } from './value-object/hash-password'
-
 export interface UserProps {
   name: string
   email: string
