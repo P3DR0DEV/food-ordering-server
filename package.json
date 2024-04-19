@@ -13,6 +13,7 @@
   "license": "ISC",
   "devDependencies": {
     "@rotrenanoliveira/eslint-config": "^1.1.0",
+    "@types/bcryptjs": "^2.4.6",
     "@types/node": "20.12.5",
     "eslint": "8.57.0",
     "tsx": "4.7.2",
@@ -22,6 +23,7 @@
     "vitest": "1.4.0"
   },
   "dependencies": {
+    "bcryptjs": "^2.4.3",
     "fastify": "^4.26.2"
   }
 }
