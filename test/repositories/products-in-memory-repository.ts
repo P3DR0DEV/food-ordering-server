@@ -1,8 +1,8 @@
-import { ProductRepository } from '@/domain/food-ordering/application/repositories/product-repository'
+import { ProductsRepository } from '@/domain/food-ordering/application/repositories/product-repository'
 import { Product } from '@/domain/food-ordering/enterprise/entities/product'
 
-export class ProductsImMemoryRepository implements ProductRepository {
-  private products: Product[] = []
+export class ProductsInMemoryRepository implements ProductsRepository {
+  public products: Product[] = []
 
   async create(product: Product): Promise<void> {
     this.products.push(product)
