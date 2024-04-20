@@ -2,13 +2,11 @@ import { Entity } from '@/core/entities/entity'
 import { UniqueEntityID } from '@/core/entities/unique-entity-id'
 import { Optional } from '@/core/types/optional'
 
-import { OrderItems } from './order-items'
-
 export interface OrdersProps {
   userId: string
   total: number
-  status: 'New' | 'Preparing' | 'Delivering' | 'Delivered'
-  items: OrderItems[]
+  status: 'New' | 'Preparing' | 'Delivering' | 'Delivered' | 'Cancelled'
+  ordersItemsId: string
   createdAt: Date
   updatedAt?: Date | null
 }
@@ -26,12 +24,12 @@ export class Orders extends Entity<OrdersProps> {
     return this.props.status
   }
 
-  set status(status: 'New' | 'Preparing' | 'Delivering' | 'Delivered') {
+  set status(status: 'New' | 'Preparing' | 'Delivering' | 'Delivered' | 'Cancelled') {
     this.props.status = status
   }
 
-  get items() {
-    return this.props.items
+  get ordersItemsId() {
+    return this.props.ordersItemsId
   }
 
   get createdAt() {
