@@ -36,10 +36,11 @@ export class Order extends Entity<OrdersProps> {
     return this.props.createdAt
   }
 
-  static create(props: Optional<OrdersProps, 'createdAt'>, id?: UniqueEntityID) {
+  static create(props: Optional<OrdersProps, 'status' | 'createdAt'>, id?: UniqueEntityID) {
     return new Order(
       {
         ...props,
+        status: props.status ?? 'New',
         createdAt: props.createdAt ?? new Date(),
       },
       id,
