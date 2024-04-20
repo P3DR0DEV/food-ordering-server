@@ -11,7 +11,7 @@ export interface OrdersProps {
   updatedAt?: Date | null
 }
 
-export class Orders extends Entity<OrdersProps> {
+export class Order extends Entity<OrdersProps> {
   get userId() {
     return this.props.userId
   }
@@ -37,7 +37,7 @@ export class Orders extends Entity<OrdersProps> {
   }
 
   static create(props: Optional<OrdersProps, 'createdAt'>, id?: UniqueEntityID) {
-    return new Orders(
+    return new Order(
       {
         ...props,
         createdAt: props.createdAt ?? new Date(),
