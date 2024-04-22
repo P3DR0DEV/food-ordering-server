@@ -4,10 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "tsx watch --env-file .env src/domain/food-ordering/application/http/server.ts",
+    "dev": "tsx watch --env-file .env src/infra/http/server.ts",
     "lint": "eslint .",
     "build": "tsup src --format esm",
-    "start": "node dist/domain/food-ordering/application/http/server.mjs",
+    "start": "node dist/infra/http/server.mjs",
     "db:migrate": "prisma migrate dev ",
     "db:seed": "prisma db seed",
     "db:studio": "prisma studio",

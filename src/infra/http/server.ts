@@ -5,6 +5,7 @@ import { fastify } from 'fastify'
 import { jsonSchemaTransform, serializerCompiler, validatorCompiler } from 'fastify-type-provider-zod'
 
 import { errorHandler } from './error-handler'
+import { createUserRoute } from './routes'
 
 const app = fastify()
 
@@ -33,6 +34,8 @@ app.register(fastifySwaggerUI, {
 app.register(fastifyCors, {
   origin: '*',
 })
+
+app.register(createUserRoute)
 
 app.setErrorHandler(errorHandler)
 
