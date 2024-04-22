@@ -6,10 +6,80 @@ generator client {
 }
 
 datasource db {
-  provider = "sqlite"
+  provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 
+enum USER_ROLE {
+  ADMIN
+  USER
+}
+
 model User {
-  id String @id @default(uuid())
+  id       String    @id @default(uuid())
+  name     String
+  email    String    @unique
+  password String
+  role     USER_ROLE
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt() @map("updated_at")
+  Order     Order[]
+
+  @@map("users")
+}
+
+model Product {
+  id          String  @id @default(uuid())
+  name        String
+  price       Float
+  imageUrl    String? @map("image_url")
+  description String?
+
+  createdAt  DateTime    @default(now()) @map("created_at")
+  updatedAt  DateTime    @updatedAt() @map("updated_at")
+  orderItems OrderItem[]
+
+  @@map("products")
+}
+
+enum ORDER_STATUS {
+  NEW
+  PREPARING
+  DELIVERING
+  DELIVERED
+  CANCELLED
+}
+
+model Order {
+  id     String       @id @default(uuid())
+  total  Float
+  status ORDER_STATUS
+
+  user      User?       @relation(fields: [userId], references: [id])
+  OrderItem OrderItem[]
+  userId    String?     @map("user_id")
+
+  @@map("orders")
+}
+
+enum ORDER_ITEMS_SIZE {
+  S
+  M
+  L
+  XL
+  XXL
+}
+
+model OrderItem {
+  id        String           @id @default(uuid())
+  size      ORDER_ITEMS_SIZE
+  quantity  Int
+  orderId   String           @map("order_id")
+  productId String           @map("product_id")
+
+  product Product @relation(fields: [productId], references: [id])
+  order   Order   @relation(fields: [orderId], references: [id])
+
+  @@map("order_items")
 }
