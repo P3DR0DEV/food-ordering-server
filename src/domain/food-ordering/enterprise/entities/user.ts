@@ -2,8 +2,6 @@ import { Entity } from '@/core/entities/entity'
 import { UniqueEntityID } from '@/core/entities/unique-entity-id'
 import { Optional } from '@/core/types/optional'
 
-import { HashPassword } from './value-object/hash-password'
-
 export interface UserProps {
   name: string
   email: string
@@ -53,13 +51,10 @@ export class User extends Entity<UserProps> {
     this.props.updatedAt = new Date()
   }
 
-  static async create(props: Optional<UserProps, 'createdAt'>, id?: UniqueEntityID): Promise<User> {
-    const password = await HashPassword.generateHash(props.password)
-
+  static create(props: Optional<UserProps, 'createdAt'>, id?: UniqueEntityID): User {
     return new User(
       {
         ...props,
-        password: password.value,
         createdAt: props.createdAt ?? new Date(),
       },
       id,

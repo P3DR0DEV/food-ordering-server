@@ -7,10 +7,10 @@ export class HashPassword {
     this.value = value
   }
 
-  static async generateHash(value: string): Promise<HashPassword> {
+  static async generateHash(value: string): Promise<string> {
     const password = await hash(value, await genSalt())
 
-    return new HashPassword(password)
+    return new HashPassword(password).value
   }
 
   async compare(value: string): Promise<boolean> {

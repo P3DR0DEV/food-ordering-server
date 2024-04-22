@@ -2,6 +2,7 @@ import { Either, failure, success } from '@/core/either'
 import { BadRequest } from '@/core/errors/bad-request'
 import { UseCase } from '@/core/use-cases/use-case'
 import { User } from '@/domain/food-ordering/enterprise/entities/user'
+import { HashPassword } from '@/domain/food-ordering/enterprise/entities/value-object/hash-password'
 
 import { UsersRepository } from '../../repositories/users-repository'
 
@@ -29,10 +30,12 @@ export class RegisterUserUseCase implements UseCase {
       return failure(new BadRequest('User already exists'))
     }
 
-    const user = await User.create({
+    const passwordHash = await HashPassword.generateHash(password)
+
+    const user = User.create({
       name,
       email,
-      password,
+      password: passwordHash,
       role,
     })
 
