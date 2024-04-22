@@ -10,8 +10,8 @@ type GetUsersByRoleUseCaseResponse = Either<BadRequest, { users: User[] }>
 export class GetUsersByRoleUseCase implements UseCase {
   constructor(private readonly usersRepository: UsersRepository) {}
 
-  async execute(role: 'admin' | 'user'): Promise<GetUsersByRoleUseCaseResponse> {
-    if (!['admin', 'user'].includes(role)) {
+  async execute(role: 'ADMIN' | 'USER'): Promise<GetUsersByRoleUseCaseResponse> {
+    if (!['ADMIN', 'USER'].includes(role)) {
       return failure(new BadRequest('Invalid role'))
     }
     const users = await this.usersRepository.findManyByRole(role)

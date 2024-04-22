@@ -10,7 +10,7 @@ interface EditUserUseCaseProps {
   id: string
   name: string
   email: string
-  role: 'admin' | 'user'
+  role: 'ADMIN' | 'USER'
 }
 
 type EditUserUseCaseResponse = Either<BadRequest | NotFound, { user: User }>

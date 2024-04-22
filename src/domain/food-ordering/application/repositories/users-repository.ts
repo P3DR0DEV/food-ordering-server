@@ -4,7 +4,7 @@ export interface UsersRepository {
   findById(id: string): Promise<User | null>
   findByEmail(email: string): Promise<User | null>
   findMany(): Promise<User[]>
-  findManyByRole(role: 'admin' | 'user'): Promise<User[]>
+  findManyByRole(role: 'ADMIN' | 'USER'): Promise<User[]>
 
   create(user: User): Promise<void>
   save(user: User): Promise<void>
