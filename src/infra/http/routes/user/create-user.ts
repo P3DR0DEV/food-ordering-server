@@ -3,10 +3,10 @@ import { ZodTypeProvider } from 'fastify-type-provider-zod'
 import z from 'zod'
 
 import { BadRequest } from '@/core/errors/bad-request'
-import { User } from '@/domain/food-ordering/enterprise/entities/user'
 import { PrismaUsersRepository } from '@/infra/database/prisma/repositories/prisma-users-repository'
 import { prisma } from '@/infra/lib/prisma'
 
+import { UserPresenter } from '../../presenters/user'
 import { CreateUserUseCaseAdapter } from './adapters/create-user-adapter'
 
 const prismaRepository = new PrismaUsersRepository(prisma)
@@ -30,15 +30,15 @@ export function CreateUser(app: FastifyInstance) {
     async (request, reply) => {
       const { name, email, password, role } = request.body
 
-      const user = User.create({ name, email, password, role })
-
-      const result = await createUser.execute(user)
+      const result = await createUser.execute({ name, email, password, role })
 
       if (result.hasFailed()) {
         throw new BadRequest(result.reason.message)
       }
 
-      return reply.status(201).send({ user: result.result.user })
+      return reply.status(201).send({
+        user: UserPresenter.toHttpResponse(result.result.user),
+      })
     },
   )
 }
