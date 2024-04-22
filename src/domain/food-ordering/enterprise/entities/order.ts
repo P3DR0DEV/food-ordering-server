@@ -5,8 +5,7 @@ import { Optional } from '@/core/types/optional'
 export interface OrdersProps {
   userId: string
   total: number
-  status: 'New' | 'Preparing' | 'Delivering' | 'Delivered' | 'Cancelled'
-  ordersItemsId: string
+  status: 'NEW' | 'PREPARING' | 'DELIVERING' | 'DELIVERED' | 'CANCELLED'
   createdAt: Date
   updatedAt?: Date | null
 }
@@ -24,12 +23,8 @@ export class Order extends Entity<OrdersProps> {
     return this.props.status
   }
 
-  set status(status: 'New' | 'Preparing' | 'Delivering' | 'Delivered' | 'Cancelled') {
+  set status(status: 'NEW' | 'PREPARING' | 'DELIVERING' | 'DELIVERED' | 'CANCELLED') {
     this.props.status = status
-  }
-
-  get ordersItemsId() {
-    return this.props.ordersItemsId
   }
 
   get createdAt() {
@@ -40,7 +35,7 @@ export class Order extends Entity<OrdersProps> {
     return new Order(
       {
         ...props,
-        status: props.status ?? 'New',
+        status: props.status ?? 'NEW',
         createdAt: props.createdAt ?? new Date(),
       },
       id,

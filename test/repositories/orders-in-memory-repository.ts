@@ -24,7 +24,7 @@ export class OrderInMemoryRepository implements OrderRepository {
     return order
   }
 
-  async findManyByStatus(status: 'New' | 'Preparing' | 'Delivering' | 'Delivered' | 'Cancelled'): Promise<Order[]> {
+  async findManyByStatus(status: 'NEW' | 'PREPARING' | 'DELIVERING' | 'DELIVERED' | 'CANCELLED'): Promise<Order[]> {
     const order = this.items.filter((order) => order.status === status)
 
     return order
@@ -32,7 +32,7 @@ export class OrderInMemoryRepository implements OrderRepository {
 
   async updateStatus(
     orderId: string,
-    status: 'Preparing' | 'Delivering' | 'Delivered' | 'Cancelled',
+    status: 'PREPARING' | 'DELIVERING' | 'DELIVERED' | 'CANCELLED',
   ): Promise<Order | null> {
     const order = this.items.find((order) => order.id.toString() === orderId)
 

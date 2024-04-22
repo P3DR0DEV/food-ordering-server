@@ -8,7 +8,6 @@ export function makeOrder(override: Partial<OrdersProps> = {}, id?: UniqueEntity
     {
       userId: faker.database.mongodbObjectId(),
       total: Number(faker.finance.amount()),
-      ordersItemsId: faker.database.mongodbObjectId(),
       ...override,
     },
     id,
