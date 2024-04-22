@@ -3,14 +3,14 @@ import { ZodTypeProvider } from 'fastify-type-provider-zod'
 import z from 'zod'
 
 import { BadRequest } from '@/core/errors/bad-request'
+import { RegisterUserUseCase } from '@/domain/food-ordering/application/use-cases/user/register'
 import { PrismaUsersRepository } from '@/infra/database/prisma/repositories/prisma-users-repository'
 import { prisma } from '@/infra/lib/prisma'
 
 import { UserPresenter } from '../../presenters/user'
-import { CreateUserUseCaseAdapter } from './adapters/create-user-adapter'
 
 const prismaRepository = new PrismaUsersRepository(prisma)
-const createUser = new CreateUserUseCaseAdapter(prismaRepository)
+const createUser = new RegisterUserUseCase(prismaRepository)
 
 export function CreateUser(app: FastifyInstance) {
   app.withTypeProvider<ZodTypeProvider>().post(
