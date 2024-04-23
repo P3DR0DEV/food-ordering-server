@@ -3,14 +3,9 @@ import { ZodTypeProvider } from 'fastify-type-provider-zod'
 import z from 'zod'
 
 import { BadRequest } from '@/core/errors/bad-request'
-import { RegisterUserUseCase } from '@/domain/food-ordering/application/use-cases/user/register'
-import { PrismaUsersRepository } from '@/infra/database/prisma/repositories/prisma-users-repository'
-import { prisma } from '@/infra/lib/prisma'
 
 import { UserPresenter } from '../../presenters/user'
-
-const prismaRepository = new PrismaUsersRepository(prisma)
-const createUser = new RegisterUserUseCase(prismaRepository)
+import { makeCreateUser } from './factories/make-create-user'
 
 export async function createUserRoute(app: FastifyInstance) {
   app.withTypeProvider<ZodTypeProvider>().post(
@@ -46,7 +41,7 @@ export async function createUserRoute(app: FastifyInstance) {
     async (request, reply) => {
       const { name, email, password, role } = request.body
 
-      const result = await createUser.execute({ name, email, password, role })
+      const result = await makeCreateUser().execute({ name, email, password, role })
 
       if (result.hasFailed()) {
         throw new BadRequest(result.reason.message)
