@@ -5,7 +5,7 @@ import { fastify } from 'fastify'
 import { jsonSchemaTransform, serializerCompiler, validatorCompiler } from 'fastify-type-provider-zod'
 
 import { errorHandler } from './error-handler'
-import { usersRoutes } from './routes'
+import { productsRoutes, usersRoutes } from './routes'
 
 const app = fastify()
 
@@ -36,6 +36,7 @@ app.register(fastifyCors, {
 })
 
 app.register(usersRoutes)
+app.register(productsRoutes)
 
 app.setErrorHandler(errorHandler)
 

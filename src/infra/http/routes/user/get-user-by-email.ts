@@ -7,12 +7,12 @@ import { NotFound } from '@/core/errors/not-found'
 import { UserPresenter } from '../../presenters/user'
 import { makeGetUserByEmail } from './factories/make-get-user-by-email'
 
-export async function getUserByIdRoute(app: FastifyInstance) {
+export async function getUserByEmailRoute(app: FastifyInstance) {
   app.withTypeProvider<ZodTypeProvider>().get(
     '/users/:email/mail',
     {
       schema: {
-        summary: 'Get User By Id',
+        summary: 'Get User By Email',
         tags: ['User'],
         params: z.object({
           email: z.string().email(),
