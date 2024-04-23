@@ -5,7 +5,7 @@ import z from 'zod'
 import { NotFound } from '@/core/errors/not-found'
 
 import { UserPresenter } from '../../presenters/user'
-import { makeGetUserByEmail } from './factories/make-get-user-by-email'
+import { getUserByEmailUseCase } from './factories/make-get-user-by-email'
 
 export async function getUserByEmailRoute(app: FastifyInstance) {
   app.withTypeProvider<ZodTypeProvider>().get(
@@ -31,7 +31,7 @@ export async function getUserByEmailRoute(app: FastifyInstance) {
     },
     async (request, reply) => {
       const { email } = request.params
-      const result = await makeGetUserByEmail().execute(email)
+      const result = await getUserByEmailUseCase.execute(email)
 
       if (!result.hasSucceeded()) {
         const { reason } = result

@@ -2,9 +2,7 @@ import { GetUsersByRoleUseCase } from '@/domain/food-ordering/application/use-ca
 import { PrismaUsersRepository } from '@/infra/database/prisma/repositories/prisma-users-repository'
 import { prisma } from '@/infra/lib/prisma'
 
-export function makeGetUsersByRole() {
-  const prismaRepository = new PrismaUsersRepository(prisma)
-  const useCase = new GetUsersByRoleUseCase(prismaRepository)
+const prismaRepository = new PrismaUsersRepository(prisma)
+const useCase = new GetUsersByRoleUseCase(prismaRepository)
 
-  return useCase
-}
+export { useCase as getUsersByRoleUseCase }

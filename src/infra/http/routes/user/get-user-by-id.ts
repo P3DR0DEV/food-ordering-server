@@ -6,7 +6,7 @@ import { BadRequest } from '@/core/errors/bad-request'
 import { NotFound } from '@/core/errors/not-found'
 
 import { UserPresenter } from '../../presenters/user'
-import { makeGetUsersById } from './factories/make-get-user-by-id'
+import { getUserByIdUseCase } from './factories/make-get-user-by-id'
 
 export async function getUserByIdRoute(app: FastifyInstance) {
   app.withTypeProvider<ZodTypeProvider>().get(
@@ -32,7 +32,7 @@ export async function getUserByIdRoute(app: FastifyInstance) {
     },
     async (request, reply) => {
       const { id } = request.params
-      const result = await makeGetUsersById().execute(id)
+      const result = await getUserByIdUseCase.execute(id)
 
       if (!result.hasSucceeded()) {
         const { reason } = result

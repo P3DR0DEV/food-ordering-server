@@ -4,7 +4,7 @@ import z from 'zod'
 
 import { BadRequest } from '@/core/errors/bad-request'
 
-import { makeDeleteUser } from './factories/make-delete-user'
+import { deleteUserUseCase } from './factories/make-delete-user'
 
 export async function deleteUserRoute(app: FastifyInstance) {
   app.withTypeProvider<ZodTypeProvider>().delete(
@@ -25,7 +25,7 @@ export async function deleteUserRoute(app: FastifyInstance) {
     },
     async (request, reply) => {
       const { id } = request.params
-      const result = await makeDeleteUser().execute(id)
+      const result = await deleteUserUseCase.execute(id)
 
       if (!result.hasSucceeded()) {
         const { reason } = result

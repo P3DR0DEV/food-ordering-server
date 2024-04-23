@@ -6,7 +6,7 @@ import { BadRequest } from '@/core/errors/bad-request'
 import { NotFound } from '@/core/errors/not-found'
 
 import { UserPresenter } from '../../presenters/user'
-import { makeEditUser } from './factories/make-edit-user'
+import { editUserUseCase } from './factories/make-edit-user'
 
 export async function editUserRoute(app: FastifyInstance) {
   app.withTypeProvider<ZodTypeProvider>().put(
@@ -38,7 +38,7 @@ export async function editUserRoute(app: FastifyInstance) {
     async (request, reply) => {
       const { id } = request.params
       const { name, email, role } = request.body
-      const result = await makeEditUser().execute({ id, name, email, role })
+      const result = await editUserUseCase.execute({ id, name, email, role })
 
       if (!result.hasSucceeded()) {
         const { reason } = result
