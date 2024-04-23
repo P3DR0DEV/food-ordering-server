@@ -12,6 +12,8 @@ export async function getOrderByUserId(app: FastifyInstance) {
     '/orders/user/:userId',
     {
       schema: {
+        summary: 'Get orders by user id',
+        tags: ['Order'],
         params: z.object({
           userId: z.string().uuid(),
         }),

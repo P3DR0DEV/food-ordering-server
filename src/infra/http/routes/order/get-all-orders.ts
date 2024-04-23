@@ -11,6 +11,8 @@ export async function getAllOrders(app: FastifyInstance) {
     '/orders',
     {
       schema: {
+        summary: 'Get all orders',
+        tags: ['Order'],
         querystring: z.object({
           status: z.enum(['NEW', 'PREPARING', 'DELIVERING', 'DELIVERED', 'CANCELLED']),
         }),

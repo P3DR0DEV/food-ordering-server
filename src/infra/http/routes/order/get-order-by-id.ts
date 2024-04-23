@@ -13,6 +13,8 @@ export async function getOrderById(app: FastifyInstance) {
     '/orders/:orderId',
     {
       schema: {
+        summary: 'Get order by id',
+        tags: ['Order'],
         params: z.object({
           orderId: z.string().uuid(),
         }),

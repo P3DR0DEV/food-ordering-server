@@ -12,6 +12,8 @@ export async function editOrderStatus(app: FastifyInstance) {
     '/orders/:orderId/status',
     {
       schema: {
+        summary: 'Edit order status',
+        tags: ['Order'],
         params: z.object({
           orderId: z.string().uuid(),
         }),
