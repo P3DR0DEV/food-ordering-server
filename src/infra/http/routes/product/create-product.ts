@@ -5,7 +5,7 @@ import { z } from 'zod'
 import { BadRequest } from '@/core/errors/bad-request'
 
 import { ProductPresenter } from '../../presenters/product'
-import { makeCreateProduct } from './factories/make-create-product'
+import { registerProductUseCase } from './factories/make-create-product'
 
 export async function createProduct(app: FastifyInstance) {
   app.withTypeProvider<ZodTypeProvider>().post(
@@ -40,7 +40,7 @@ export async function createProduct(app: FastifyInstance) {
     async (request, reply) => {
       const { name, description, imageUrl, price } = request.body
 
-      const result = await makeCreateProduct().execute({
+      const result = await registerProductUseCase.execute({
         name,
         description: description ?? null,
         imageUrl: imageUrl ?? null,

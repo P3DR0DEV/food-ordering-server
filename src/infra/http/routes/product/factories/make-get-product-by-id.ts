@@ -2,9 +2,7 @@ import { GetProductByIdUseCase } from '@/domain/food-ordering/application/use-ca
 import { PrismaProductRepository } from '@/infra/database/prisma/repositories/prisma-product-repository'
 import { prisma } from '@/infra/lib/prisma'
 
-export function makeGetProductById() {
-  const productsRepository = new PrismaProductRepository(prisma)
-  const usecase = new GetProductByIdUseCase(productsRepository)
+const productsRepository = new PrismaProductRepository(prisma)
+const usecase = new GetProductByIdUseCase(productsRepository)
 
-  return usecase
-}
+export { usecase as getProductByIdUseCase }

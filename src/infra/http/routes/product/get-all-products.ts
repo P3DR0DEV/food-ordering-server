@@ -2,7 +2,7 @@ import { FastifyInstance } from 'fastify'
 import { z } from 'zod'
 
 import { ProductPresenter } from '../../presenters/product'
-import { makeGetAllProducts } from './factories/make-get-all-products'
+import { getAllProductsUseCase } from './factories/make-get-all-products'
 
 export async function getAllProducts(app: FastifyInstance) {
   app.get(
@@ -27,7 +27,7 @@ export async function getAllProducts(app: FastifyInstance) {
       },
     },
     async (request, reply) => {
-      const result = await makeGetAllProducts().execute()
+      const result = await getAllProductsUseCase.execute()
 
       if (result.hasFailed()) {
         throw new Error()

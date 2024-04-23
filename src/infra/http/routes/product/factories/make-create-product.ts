@@ -2,10 +2,8 @@ import { RegisterProductUseCase } from '@/domain/food-ordering/application/use-c
 import { PrismaProductRepository } from '@/infra/database/prisma/repositories/prisma-product-repository'
 import { prisma } from '@/infra/lib/prisma'
 
-export function makeCreateProduct() {
-  const productsRepository = new PrismaProductRepository(prisma)
+const productsRepository = new PrismaProductRepository(prisma)
 
-  const usecase = new RegisterProductUseCase(productsRepository)
+const usecase = new RegisterProductUseCase(productsRepository)
 
-  return usecase
-}
+export { usecase as registerProductUseCase }

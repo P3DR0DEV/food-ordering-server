@@ -5,7 +5,7 @@ import { z } from 'zod'
 import { NotFound } from '@/core/errors/not-found'
 
 import { ProductPresenter } from '../../presenters/product'
-import { makeEditProduct } from './factories/make-edit-product'
+import { editProductUseCase } from './factories/make-edit-product'
 
 export async function editProduct(app: FastifyInstance) {
   app.withTypeProvider<ZodTypeProvider>().put(
@@ -46,7 +46,7 @@ export async function editProduct(app: FastifyInstance) {
       const { productId } = request.params
       const { name, description, price, imageUrl } = request.body
 
-      const result = await makeEditProduct().execute({
+      const result = await editProductUseCase.execute({
         id: productId,
         name,
         description,

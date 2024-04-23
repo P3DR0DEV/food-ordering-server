@@ -6,7 +6,7 @@ import { BadRequest } from '@/core/errors/bad-request'
 import { NotFound } from '@/core/errors/not-found'
 
 import { ProductPresenter } from '../../presenters/product'
-import { makeGetProductById } from './factories/make-get-product-by-id'
+import { getProductByIdUseCase } from './factories/make-get-product-by-id'
 
 export async function getProductById(app: FastifyInstance) {
   app.withTypeProvider<ZodTypeProvider>().get(
@@ -46,7 +46,7 @@ export async function getProductById(app: FastifyInstance) {
     async (request, reply) => {
       const { id } = request.params
 
-      const result = await makeGetProductById().execute(id)
+      const result = await getProductByIdUseCase.execute(id)
 
       if (!result.hasSucceeded()) {
         const { reason } = result

@@ -5,7 +5,7 @@ import z from 'zod'
 import { BadRequest } from '@/core/errors/bad-request'
 import { NotFound } from '@/core/errors/not-found'
 
-import { makeDeleteProduct } from './factories/make-delete-product'
+import { deleteProductUseCase } from './factories/make-delete-product'
 
 export async function deleteProduct(app: FastifyInstance) {
   app.withTypeProvider<ZodTypeProvider>().delete(
@@ -39,7 +39,7 @@ export async function deleteProduct(app: FastifyInstance) {
     async (request, reply) => {
       const { id } = request.params
 
-      const result = await makeDeleteProduct().execute(id)
+      const result = await deleteProductUseCase.execute(id)
 
       if (!result.hasSucceeded()) {
         const { reason } = result
