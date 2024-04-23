@@ -8,8 +8,6 @@ type RegisterOrderUseCaseRequest = {
   userId: string
   total: number
   status?: 'NEW' | 'PREPARING' | 'DELIVERING' | 'DELIVERED' | 'CANCELLED'
-  createdAt: Date
-  updatedAt?: Date | null
 }
 
 type RegisterOrderUseCaseResponse = Either<unknown, { order: Order }>
