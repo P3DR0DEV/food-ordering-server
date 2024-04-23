@@ -7,8 +7,7 @@ import { OrderRepository } from '../../repositories/order-repository'
 type RegisterOrderUseCaseRequest = {
   userId: string
   total: number
-  status?: 'New' | 'Preparing' | 'Delivering' | 'Delivered' | 'Cancelled'
-  ordersItemsId: string
+  status?: 'NEW' | 'PREPARING' | 'DELIVERING' | 'DELIVERED' | 'CANCELLED'
   createdAt: Date
   updatedAt?: Date | null
 }
@@ -22,8 +21,7 @@ export class RegisterOrderUseCase implements UseCase {
     const order = Order.create({
       userId: props.userId,
       total: props.total,
-      status: props.status ?? 'New',
-      ordersItemsId: props.ordersItemsId,
+      status: props.status ?? 'NEW',
     })
 
     await this.orderRepository.create(order)

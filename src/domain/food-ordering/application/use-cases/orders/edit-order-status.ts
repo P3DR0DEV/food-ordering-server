@@ -13,13 +13,13 @@ export class EditOrderStatusUseCase implements UseCase {
 
   async execute(
     orderId: string,
-    status: 'Preparing' | 'Delivering' | 'Delivered' | 'Cancelled',
+    status: 'PREPARING' | 'DELIVERING' | 'DELIVERED' | 'CANCELLED',
   ): Promise<EditOrderStatusUseCaseResponse> {
     if (!status) {
       return failure(new BadRequest('Status is required'))
     }
 
-    if (['Preparing', 'Delivering', 'Delivered', 'Cancelled'].indexOf(status) === -1) {
+    if (['PREPARING', 'DELIVERING', 'DELIVERED', 'CANCELLED'].indexOf(status) === -1) {
       return failure(new BadRequest('Invalid status'))
     }
 

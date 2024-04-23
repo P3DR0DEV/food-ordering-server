@@ -11,13 +11,13 @@ export class GetOrdersByStatusUseCase implements UseCase {
   constructor(private readonly orderRepository: OrderRepository) {}
 
   async execute(
-    status: 'New' | 'Preparing' | 'Delivering' | 'Delivered' | 'Cancelled',
+    status: 'NEW' | 'PREPARING' | 'DELIVERING' | 'DELIVERED' | 'CANCELLED',
   ): Promise<GetOrdersByStatusUseCaseResponse> {
     if (!status) {
       return failure(new BadRequest('Status is required'))
     }
 
-    if (['New', 'Preparing', 'Delivering', 'Delivered', 'Cancelled'].indexOf(status) === -1) {
+    if (['NEW', 'PREPARING', 'DELIVERING', 'DELIVERED', 'Cancelled'].indexOf(status) === -1) {
       return failure(new BadRequest('Invalid status'))
     }
 
