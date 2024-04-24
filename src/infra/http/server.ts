@@ -7,7 +7,7 @@ import { jsonSchemaTransform, serializerCompiler, validatorCompiler } from 'fast
 import { errorHandler } from './error-handler'
 import { ordersRoutes, productsRoutes, usersRoutes } from './routes'
 
-const app = fastify()
+const app = fastify({ logger: { level: 'info' } })
 
 // ! Fastify TypeProviderZod config to type routes inputs and outputs
 app.setValidatorCompiler(validatorCompiler)
@@ -41,6 +41,6 @@ app.register(ordersRoutes)
 
 app.setErrorHandler(errorHandler)
 
-app.listen({ port: 3333 }).then(() => {
+app.listen({ port: 3333, host: '0.0.0.0' }).then(() => {
   console.log('[server] HTTP server listening on port 3333')
 })
