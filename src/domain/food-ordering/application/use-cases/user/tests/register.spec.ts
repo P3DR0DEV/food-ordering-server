@@ -28,7 +28,7 @@ describe('Register User use case', () => {
 
       expect(user.name).toEqual('John Doe')
       expect(user.email).toEqual('johndoe@example.com')
-      expect(user.role).toEqual('user')
+      expect(user.role).toEqual('USER')
       expect(user.password).not.toEqual('123456')
     }
 

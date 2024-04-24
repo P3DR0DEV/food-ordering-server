@@ -18,7 +18,7 @@ describe('Get Orders by status use case', () => {
       await orderRepository.create(order)
     }
 
-    const result = await sut.execute('Cancelled')
+    const result = await sut.execute('DELIVERED')
 
     expect(result.hasSucceeded()).toBeTruthy()
 
@@ -27,9 +27,9 @@ describe('Get Orders by status use case', () => {
       expect(orders).toHaveLength(0)
     }
     const toUpdate = new EditOrderStatusUseCase(orderRepository)
-    await toUpdate.execute(orderRepository.items[0].id.toString(), 'Delivered')
+    await toUpdate.execute(orderRepository.items[0].id.toString(), 'DELIVERED')
 
-    const result2 = await sut.execute('Delivered')
+    const result2 = await sut.execute('DELIVERED')
 
     expect(result2.hasSucceeded()).toBeTruthy()
 
