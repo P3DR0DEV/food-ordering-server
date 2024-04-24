@@ -42,6 +42,10 @@ export class Order extends Entity<OrdersProps> {
     return this.props.OrderItems
   }
 
+  set OrderItems(orderItems: OrderItems[]) {
+    this.props.OrderItems = orderItems
+  }
+
   static create(props: Optional<OrdersProps, 'status' | 'createdAt'>, id?: UniqueEntityID) {
     return new Order(
       {

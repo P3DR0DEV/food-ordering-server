@@ -16,6 +16,13 @@ export async function createOrder(app: FastifyInstance) {
           userId: z.string(),
           total: z.number(),
           status: z.enum(['NEW', 'PREPARING', 'DELIVERING', 'DELIVERED', 'CANCELLED']).optional(),
+          orderItems: z.array(
+            z.object({
+              productId: z.string().uuid(),
+              quantity: z.number(),
+              size: z.enum(['S', 'M', 'L', 'XL', 'XXL']),
+            }),
+          ),
         }),
         response: {
           201: z.object({
@@ -24,18 +31,28 @@ export async function createOrder(app: FastifyInstance) {
               total: z.number(),
               status: z.string().optional(),
               userId: z.string(),
+              createdAt: z.string(),
+              OrderItems: z.array(
+                z.object({
+                  productId: z.string().uuid(),
+                  quantity: z.number(),
+                  size: z.enum(['S', 'M', 'L', 'XL', 'XXL']),
+                  orderId: z.string().uuid(),
+                }),
+              ),
             }),
           }),
         },
       },
     },
     async (request, reply) => {
-      const { userId, total, status } = request.body
+      const { userId, total, status, orderItems } = request.body
 
       const result = await createOrderUseCase.execute({
         userId,
         total,
         status,
+        OrderItems: orderItems,
       })
 
       if (!result.hasSucceeded()) {

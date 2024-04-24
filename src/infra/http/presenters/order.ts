@@ -8,6 +8,7 @@ export class OrderPresenter {
       status: order.status,
       userId: order.userId,
       createdAt: order.createdAt.toISOString(),
+      OrderItems: order.OrderItems,
     }
   }
 }

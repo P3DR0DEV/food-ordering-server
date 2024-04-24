@@ -4,6 +4,10 @@ import { OrderItems } from '@/domain/food-ordering/enterprise/entities/order-ite
 export class OrderItemsInMemoryRepository implements OrderItemsRepository {
   public items: OrderItems[] = []
 
+  async createMany(orderItems: OrderItems[]): Promise<void> {
+    this.items.push(...orderItems)
+  }
+
   async findById(id: string): Promise<OrderItems | null> {
     const item = this.items.find((item) => item.id.toString() === id)
 

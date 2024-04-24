@@ -17,8 +17,6 @@ export class PrismaOrderMapper {
           productId: item.productId,
           size: item.size,
           quantity: item.quantity,
-          createdAt: item.createdAt,
-          updatedAt: item.updatedAt,
         },
         new UniqueEntityID(item.id),
       )
@@ -41,8 +39,6 @@ export class PrismaOrderMapper {
       userId: order.userId,
       status: order.status,
       total: order.total,
-      createdAt: order.createdAt,
-      updatedAt: order.updatedAt ?? new Date(),
       OrderItem: order.OrderItems.map((item) => {
         return {
           id: item.id.toString(),
