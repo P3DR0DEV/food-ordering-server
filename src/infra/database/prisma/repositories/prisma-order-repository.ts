@@ -9,7 +9,7 @@ export class PrismaOrderRepository implements OrderRepository {
   constructor(private prisma: PrismaClient) {}
 
   async findMany(): Promise<Order[]> {
-    const orders = await this.prisma.order.findMany()
+    const orders = await this.prisma.order.findMany({ include: { OrderItem: true } })
 
     return orders.map(PrismaOrderMapper.toDomain)
   }
@@ -17,6 +17,7 @@ export class PrismaOrderRepository implements OrderRepository {
   async findManyByUserId(userId: string): Promise<Order[]> {
     const orders = await this.prisma.order.findMany({
       where: { userId },
+      include: { OrderItem: true },
     })
 
     return orders.map(PrismaOrderMapper.toDomain)
@@ -25,6 +26,7 @@ export class PrismaOrderRepository implements OrderRepository {
   async findManyByStatus(status: 'NEW' | 'PREPARING' | 'DELIVERING' | 'DELIVERED' | 'CANCELLED'): Promise<Order[]> {
     const orders = await this.prisma.order.findMany({
       where: { status },
+      include: { OrderItem: true },
     })
 
     return orders.map(PrismaOrderMapper.toDomain)
@@ -37,6 +39,7 @@ export class PrismaOrderRepository implements OrderRepository {
     const order = await this.prisma.order.update({
       where: { id: orderId },
       data: { status },
+      include: { OrderItem: true },
     })
 
     if (!order) {
@@ -47,7 +50,10 @@ export class PrismaOrderRepository implements OrderRepository {
   }
 
   async findById(id: string): Promise<Order | null> {
-    const order = await this.prisma.order.findUnique({ where: { id } })
+    const order = await this.prisma.order.findUnique({
+      where: { id },
+      include: { OrderItem: true },
+    })
 
     if (!order) {
       return null
@@ -59,6 +65,18 @@ export class PrismaOrderRepository implements OrderRepository {
   async create(order: Order): Promise<void> {
     const data = PrismaOrderMapper.toPersistence(order)
 
-    await this.prisma.order.create({ data })
+    await this.prisma.order.create({
+      data: {
+        id: data.id,
+        userId: data.userId,
+        total: data.total,
+        status: data.status,
+        OrderItem: {
+          createMany: {
+            data: data.OrderItem,
+          },
+        },
+      },
+    })
   }
 }

@@ -32,6 +32,10 @@ export class OrderItems extends Entity<OrderItemsProps> {
     return this.props.createdAt
   }
 
+  get updatedAt() {
+    return this.props.updatedAt
+  }
+
   static create(props: Optional<OrderItemsProps, 'createdAt'>, id?: UniqueEntityID) {
     return new OrderItems(
       {
