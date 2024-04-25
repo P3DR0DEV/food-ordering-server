@@ -24,7 +24,7 @@ model User {
 
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt() @map("updated_at")
-  Order     Order[]
+  order     Order[]
 
   @@map("users")
 }
@@ -57,8 +57,8 @@ model Order {
   status ORDER_STATUS
   userId String       @map("user_id")
 
-  OrderItem OrderItem[]
-  User      User        @relation(fields: [userId], references: [id])
+  orderItem OrderItem[]
+  user      User        @relation(fields: [userId], references: [id])
 
   @@map("orders")
 }
