@@ -2,11 +2,14 @@ import { Entity } from '@/core/entities/entity'
 import { UniqueEntityID } from '@/core/entities/unique-entity-id'
 import { Optional } from '@/core/types/optional'
 
+import { Token } from './token'
+
 export interface UserProps {
   name: string
   email: string
   password: string
   role: 'ADMIN' | 'USER'
+  tokens: Token[]
   createdAt: Date
   updatedAt?: Date | null
 }
