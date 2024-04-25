@@ -6,6 +6,7 @@ import { BadRequest } from '@/core/errors/bad-request'
 
 import { ProductPresenter } from '../../presenters/product'
 import { registerProductUseCase } from './factories/make-create-product'
+import { verifyJwt } from '../auth/verify-jwt'
 
 export async function createProduct(app: FastifyInstance) {
   app.withTypeProvider<ZodTypeProvider>().post(

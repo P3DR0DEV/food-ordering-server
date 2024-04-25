@@ -1,16 +1,22 @@
 import { FastifyInstance } from 'fastify'
+import { ZodTypeProvider } from 'fastify-type-provider-zod'
 import { z } from 'zod'
 
 import { ProductPresenter } from '../../presenters/product'
+import { verifyJwt } from '../auth/verify-jwt'
 import { getAllProductsUseCase } from './factories/make-get-all-products'
 
 export async function getAllProducts(app: FastifyInstance) {
-  app.get(
+  app.withTypeProvider<ZodTypeProvider>().get(
     '/products',
     {
+      onRequest: [verifyJwt],
       schema: {
         summary: 'Get All Products',
         tags: ['Product'],
+        headers: z.object({
+          authorization: z.string(),
+        }),
         response: {
           200: z.object({
             products: z.array(

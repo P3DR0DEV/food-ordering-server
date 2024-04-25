@@ -21,10 +21,7 @@ export async function signIn(app: FastifyInstance) {
         }),
         response: {
           200: z.object({
-            user: z.object({
-              id: z.string(),
-              isAdmin: z.boolean(),
-            }),
+            token: z.string(),
           }),
         },
       },
@@ -51,7 +48,12 @@ export async function signIn(app: FastifyInstance) {
         throw new BadRequest('Invalid password')
       }
 
-      return reply.status(200).send({ user: { id: user.id.toString(), isAdmin: user.role === 'ADMIN' } })
+      const token = app.jwt.sign({
+        id: user.id.toString(),
+        isAdmin: user.role === 'ADMIN',
+        email: user.email,
+      })
+      return reply.status(200).send({ token })
     },
   )
 }
