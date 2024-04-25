@@ -13,7 +13,7 @@ export class HashPassword {
     return new HashPassword(password).value
   }
 
-  static async compare(value: string, hash: string): Promise<boolean> {
-    return compare(value, hash)
+  async compare(value: string): Promise<boolean> {
+    return compare(value, this.value)
   }
 }
