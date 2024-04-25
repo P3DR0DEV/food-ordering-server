@@ -6,6 +6,7 @@ import { jsonSchemaTransform, serializerCompiler, validatorCompiler } from 'fast
 
 import { errorHandler } from './error-handler'
 import { ordersRoutes, productsRoutes, usersRoutes } from './routes'
+import { signIn } from './routes/auth/sign-in'
 
 const app = fastify({ logger: { level: 'info' } })
 
@@ -35,6 +36,7 @@ app.register(fastifyCors, {
   origin: '*',
 })
 
+app.register(signIn)
 app.register(usersRoutes)
 app.register(productsRoutes)
 app.register(ordersRoutes)
