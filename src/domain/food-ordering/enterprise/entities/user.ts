@@ -21,14 +21,6 @@ export class User extends Entity<UserProps> {
     this.touch()
   }
 
-  get tokens() {
-    return this.props.tokens
-  }
-
-  set tokens(tokens: Token[]) {
-    this.props.tokens = tokens
-  }
-
   get email() {
     return this.props.email
   }

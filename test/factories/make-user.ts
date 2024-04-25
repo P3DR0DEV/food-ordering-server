@@ -10,7 +10,6 @@ export async function makeUser(override: Partial<UserProps> = {}, id?: UniqueEnt
       email: faker.internet.email(),
       password: faker.internet.password(),
       role: 'USER',
-      tokens: [],
       ...override,
     },
     id,
