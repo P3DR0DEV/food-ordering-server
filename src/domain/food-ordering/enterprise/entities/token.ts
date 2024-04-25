@@ -1,5 +1,6 @@
 import { Entity } from '@/core/entities/entity'
 import { UniqueEntityID } from '@/core/entities/unique-entity-id'
+import { Optional } from '@/core/types/optional'
 
 export interface TokenProps {
   userId: string
@@ -30,7 +31,7 @@ export class Token extends Entity<TokenProps> {
     return this.props.userId
   }
 
-  static create(props: TokenProps, id?: UniqueEntityID): Token {
+  static create(props: Optional<TokenProps, 'createdAt'>, id?: UniqueEntityID): Token {
     return new Token(
       {
         ...props,

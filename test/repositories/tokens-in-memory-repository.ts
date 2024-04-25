@@ -3,11 +3,9 @@ import { Token } from '@/domain/food-ordering/enterprise/entities/token'
 
 export class TokenInMemoryRepository implements TokenRepository {
   public tokens: Token[] = []
-  async get(userId: string): Promise<Token | null> {
-    const token = this.tokens.find((t) => t.userId.toString() === userId)
-    if (!token) {
-      return null
-    }
+  async get(userId: string): Promise<Token[]> {
+    const token = this.tokens.filter((t) => t.userId.toString() === userId)
+
     return token
   }
 
