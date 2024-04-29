@@ -24,7 +24,7 @@ export class UsersInMemoryRepository implements UsersRepository {
     return user
   }
 
-  async findMany(role?: 'USER' | 'ADMIN'): Promise<User[]> {
+  async findMany(role?: 'user' | 'admin'): Promise<User[]> {
     if (role) {
       return this.users.filter((user) => user.role === role)
     }

@@ -18,13 +18,13 @@ export async function editOrderStatus(app: FastifyInstance) {
           orderId: z.string().uuid(),
         }),
         body: z.object({
-          status: z.enum(['PREPARING', 'DELIVERING', 'DELIVERED', 'CANCELLED']),
+          status: z.enum(['preparing', 'delivering', 'delivered', 'cancelled']),
         }),
         response: {
           200: z.object({
             order: z.object({
               id: z.string().uuid(),
-              status: z.enum(['NEW', 'PREPARING', 'DELIVERING', 'DELIVERED', 'CANCELLED']),
+              status: z.string(),
               total: z.number(),
               userId: z.string().uuid(),
               createdAt: z.string(),

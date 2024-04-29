@@ -10,7 +10,7 @@ interface RegisterUserUseCaseRequest {
   name: string
   email: string
   password: string
-  role?: 'ADMIN' | 'USER'
+  role?: 'admin' | 'user'
 }
 
 type RegisterUserUseCaseResponse = Either<BadRequest, { user: User }>

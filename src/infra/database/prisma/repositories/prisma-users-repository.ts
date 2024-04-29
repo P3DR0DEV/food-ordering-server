@@ -32,7 +32,9 @@ export class PrismaUsersRepository implements UsersRepository {
     return PrismaUserMapper.toDomain(user)
   }
 
-  async findMany(role?: 'ADMIN' | 'USER'): Promise<User[]> {
+  async findMany(opt?: 'admin' | 'user'): Promise<User[]> {
+    const role = opt === 'user' ? 'USER' : 'ADMIN'
+
     const users = await this.prisma.user.findMany({
       where: { role },
     })

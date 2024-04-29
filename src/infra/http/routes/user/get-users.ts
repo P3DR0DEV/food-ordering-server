@@ -14,7 +14,7 @@ export async function getUsersRoute(app: FastifyInstance) {
         summary: 'Get all Users',
         tags: ['User'],
         querystring: z.object({
-          role: z.enum(['ADMIN', 'USER']).optional(),
+          role: z.enum(['admin', 'user']).optional(),
         }),
         response: {
           200: z.object({
@@ -23,7 +23,7 @@ export async function getUsersRoute(app: FastifyInstance) {
                 id: z.string(),
                 name: z.string(),
                 email: z.string(),
-                role: z.enum(['ADMIN', 'USER']),
+                role: z.enum(['admin', 'user']),
               }),
             ),
           }),

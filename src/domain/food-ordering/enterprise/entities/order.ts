@@ -7,7 +7,7 @@ import { OrderItems } from './order-items'
 export interface OrdersProps {
   userId: string
   total: number
-  status: 'NEW' | 'PREPARING' | 'DELIVERING' | 'DELIVERED' | 'CANCELLED'
+  status: 'new' | 'preparing' | 'delivering' | 'delivered' | 'cancelled'
   orderItems: OrderItems[]
   createdAt: Date
   updatedAt?: Date | null
@@ -26,7 +26,7 @@ export class Order extends Entity<OrdersProps> {
     return this.props.status
   }
 
-  set status(status: 'NEW' | 'PREPARING' | 'DELIVERING' | 'DELIVERED' | 'CANCELLED') {
+  set status(status: 'new' | 'preparing' | 'delivering' | 'delivered' | 'cancelled') {
     this.props.status = status
   }
 
@@ -50,7 +50,7 @@ export class Order extends Entity<OrdersProps> {
     return new Order(
       {
         ...props,
-        status: props.status ?? 'NEW',
+        status: props.status ?? 'new',
         createdAt: props.createdAt ?? new Date(),
       },
       id,

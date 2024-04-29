@@ -2,14 +2,17 @@ import { PrismaClient } from '@prisma/client'
 
 import { OrderRepository } from '@/domain/food-ordering/application/repositories/order-repository'
 import { Order } from '@/domain/food-ordering/enterprise/entities/order'
+import { OrderStatusMapper } from '@/infra/util/order-status-mapper'
 
 import { PrismaOrderMapper } from '../mappers/prisma-orders-mapper'
 
 export class PrismaOrderRepository implements OrderRepository {
   constructor(private prisma: PrismaClient) {}
 
-  async findMany(): Promise<Order[]> {
-    const orders = await this.prisma.order.findMany({ include: { orderItem: true } })
+  async findMany(opt?: 'new' | 'preparing' | 'delivering' | 'delivered' | 'cancelled'): Promise<Order[]> {
+    const status = OrderStatusMapper.toPersistence(opt)
+
+    const orders = await this.prisma.order.findMany({ where: { status }, include: { orderItem: true } })
 
     return orders.map(PrismaOrderMapper.toDomain)
   }
@@ -23,19 +26,12 @@ export class PrismaOrderRepository implements OrderRepository {
     return orders.map(PrismaOrderMapper.toDomain)
   }
 
-  async findManyByStatus(status: 'NEW' | 'PREPARING' | 'DELIVERING' | 'DELIVERED' | 'CANCELLED'): Promise<Order[]> {
-    const orders = await this.prisma.order.findMany({
-      where: { status },
-      include: { orderItem: true },
-    })
-
-    return orders.map(PrismaOrderMapper.toDomain)
-  }
-
   async updateStatus(
     orderId: string,
-    status: 'PREPARING' | 'DELIVERING' | 'DELIVERED' | 'CANCELLED',
+    opt: 'preparing' | 'delivering' | 'delivered' | 'cancelled',
   ): Promise<Order | null> {
+    const status = OrderStatusMapper.toPersistence(opt)
+
     const order = await this.prisma.order.update({
       where: { id: orderId },
       data: { status },

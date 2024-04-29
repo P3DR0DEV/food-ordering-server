@@ -15,7 +15,7 @@ export async function createOrder(app: FastifyInstance) {
         body: z.object({
           userId: z.string(),
           total: z.number(),
-          status: z.enum(['NEW', 'PREPARING', 'DELIVERING', 'DELIVERED', 'CANCELLED']).optional(),
+          status: z.enum(['new', 'preparing', 'delivering', 'delivered', 'cancelled']).optional(),
           orderItems: z.array(
             z.object({
               productId: z.string().uuid(),

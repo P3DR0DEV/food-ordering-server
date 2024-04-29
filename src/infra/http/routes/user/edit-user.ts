@@ -21,7 +21,7 @@ export async function editUserRoute(app: FastifyInstance) {
         body: z.object({
           name: z.string(),
           email: z.string().email(),
-          role: z.enum(['ADMIN', 'USER']),
+          role: z.enum(['admin', 'user']),
         }),
         response: {
           200: z.object({
@@ -29,7 +29,7 @@ export async function editUserRoute(app: FastifyInstance) {
               id: z.string(),
               name: z.string(),
               email: z.string(),
-              role: z.enum(['ADMIN', 'USER']),
+              role: z.enum(['admin', 'user']),
             }),
           }),
         },

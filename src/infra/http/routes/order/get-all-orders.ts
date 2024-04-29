@@ -4,7 +4,6 @@ import z from 'zod'
 
 import { OrderPresenter } from '../../presenters/order'
 import { getAllOrdersUseCase } from './factories/make-get-all-orders'
-import { getOrdersByStatusUseCase } from './factories/make-get-orders-by-status'
 
 export async function getAllOrders(app: FastifyInstance) {
   app.withTypeProvider<ZodTypeProvider>().get(
@@ -14,14 +13,14 @@ export async function getAllOrders(app: FastifyInstance) {
         summary: 'Get all orders',
         tags: ['Order'],
         querystring: z.object({
-          status: z.enum(['NEW', 'PREPARING', 'DELIVERING', 'DELIVERED', 'CANCELLED']),
+          status: z.enum(['new', 'preparing', 'delivering', 'delivered', 'cancelled']).optional(),
         }),
         response: {
           200: z.object({
             orders: z.array(
               z.object({
                 id: z.string().uuid(),
-                status: z.enum(['NEW', 'PREPARING', 'DELIVERING', 'DELIVERED', 'CANCELLED']),
+                status: z.string(),
                 total: z.number(),
                 userId: z.string().uuid(),
                 createdAt: z.string(),
@@ -34,7 +33,7 @@ export async function getAllOrders(app: FastifyInstance) {
     async (request, reply) => {
       const { status } = request.query
 
-      const result = status ? await getOrdersByStatusUseCase.execute(status) : await getAllOrdersUseCase.execute()
+      const result = await getAllOrdersUseCase.execute(status)
 
       if (!result.hasSucceeded()) {
         throw new Error()

@@ -16,7 +16,7 @@ describe('Register User use case', () => {
       name: 'John Doe',
       email: 'johndoe@example.com',
       password: '123456',
-      role: 'USER',
+      role: 'user',
     })
 
     expect(result.hasSucceeded()).toBeTruthy()
@@ -36,7 +36,7 @@ describe('Register User use case', () => {
       name: 'John Doe',
       email: 'johndoe@example.com',
       password: '123456',
-      role: 'USER',
+      role: 'user',
     })
 
     expect(secondUser.hasSucceeded()).toBeFalsy()

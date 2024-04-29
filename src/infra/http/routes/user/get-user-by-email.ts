@@ -23,7 +23,7 @@ export async function getUserByEmailRoute(app: FastifyInstance) {
               id: z.string(),
               name: z.string(),
               email: z.string(),
-              role: z.enum(['ADMIN', 'USER']),
+              role: z.enum(['admin', 'user']),
             }),
           }),
         },

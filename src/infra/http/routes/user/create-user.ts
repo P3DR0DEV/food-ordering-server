@@ -18,7 +18,7 @@ export async function createUserRoute(app: FastifyInstance) {
           name: z.string(),
           email: z.string().email(),
           password: z.string(),
-          role: z.enum(['ADMIN', 'USER']).default('USER'),
+          role: z.enum(['admin', 'user']).default('user'),
         }),
         response: {
           201: z.object({
@@ -26,7 +26,7 @@ export async function createUserRoute(app: FastifyInstance) {
               id: z.string(),
               name: z.string(),
               email: z.string(),
-              role: z.enum(['ADMIN', 'USER']),
+              role: z.enum(['admin', 'user']),
             }),
           }),
           400: z.object({

@@ -15,17 +15,17 @@ describe('edit Order status use case', () => {
     const newOrder = makeOrder()
     await orderRepository.create(newOrder)
 
-    const result = await sut.execute(newOrder.id.toString(), 'PREPARING')
+    const result = await sut.execute(newOrder.id.toString(), 'preparing')
 
     expect(result.hasSucceeded()).toBeTruthy()
 
     if (result.hasSucceeded()) {
       const { order } = result.result
 
-      expect(order.status).toEqual('PREPARING')
+      expect(order.status).toEqual('preparing')
     }
 
-    const erro = await sut.execute('random-id', 'PREPARING')
+    const erro = await sut.execute('random-id', 'preparing')
 
     expect(erro.hasFailed()).toBeTruthy()
   })

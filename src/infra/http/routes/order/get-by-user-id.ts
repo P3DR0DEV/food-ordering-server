@@ -22,7 +22,7 @@ export async function getOrderByUserId(app: FastifyInstance) {
             orders: z.array(
               z.object({
                 id: z.string().uuid(),
-                status: z.enum(['NEW', 'PREPARING', 'DELIVERING', 'DELIVERED', 'CANCELLED']),
+                status: z.string(),
                 total: z.number(),
               }),
             ),

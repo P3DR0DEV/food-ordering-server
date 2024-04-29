@@ -3,6 +3,7 @@ import { Order as PrismaOrder, OrderItem as PrismaOrderItem } from '@prisma/clie
 import { UniqueEntityID } from '@/core/entities/unique-entity-id'
 import { Order } from '@/domain/food-ordering/enterprise/entities/order'
 import { OrderItems } from '@/domain/food-ordering/enterprise/entities/order-items'
+import { OrderStatusMapper } from '@/infra/util/order-status-mapper'
 
 interface PrismaOrderWithItems extends PrismaOrder {
   orderItem: PrismaOrderItem[]
@@ -10,6 +11,7 @@ interface PrismaOrderWithItems extends PrismaOrder {
 
 export class PrismaOrderMapper {
   static toDomain(raw: PrismaOrderWithItems): Order {
+    const status = OrderStatusMapper.toDomain(raw.status)
     const items = raw.orderItem.map((item) => {
       return OrderItems.create(
         {
@@ -25,7 +27,7 @@ export class PrismaOrderMapper {
     return Order.create(
       {
         userId: raw.userId,
-        status: raw.status,
+        status,
         total: raw.total,
         orderItems: items,
       },
@@ -34,10 +36,11 @@ export class PrismaOrderMapper {
   }
 
   static toPersistence(order: Order): PrismaOrderWithItems {
+    const status = OrderStatusMapper.toPersistence(order.status)
     return {
       id: order.id.toString(),
       userId: order.userId,
-      status: order.status,
+      status,
       total: order.total,
       orderItem: order.orderItems.map((item) => {
         return {

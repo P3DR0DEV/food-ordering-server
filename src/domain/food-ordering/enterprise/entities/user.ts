@@ -6,7 +6,7 @@ export interface UserProps {
   name: string
   email: string
   password: string
-  role: 'ADMIN' | 'USER'
+  role: 'admin' | 'user'
   createdAt: Date
   updatedAt?: Date | null
 }
@@ -34,7 +34,7 @@ export class User extends Entity<UserProps> {
     return this.props.role
   }
 
-  set role(role: 'ADMIN' | 'USER') {
+  set role(role: 'admin' | 'user') {
     this.props.role = role
     this.touch()
   }
@@ -56,7 +56,7 @@ export class User extends Entity<UserProps> {
       {
         ...props,
         createdAt: props.createdAt ?? new Date(),
-        role: props.role ?? 'USER',
+        role: props.role ?? 'user',
       },
       id,
     )
