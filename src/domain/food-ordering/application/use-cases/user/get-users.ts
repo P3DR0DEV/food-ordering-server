@@ -9,8 +9,8 @@ export type GetUsersUseCaseResponse = Either<unknown, { users: User[] }>
 export class GetUsersUseCase implements UseCase {
   constructor(private readonly usersRepository: UsersRepository) {}
 
-  async execute(): Promise<GetUsersUseCaseResponse> {
-    const users = await this.usersRepository.findMany()
+  async execute(role?: 'USER' | 'ADMIN'): Promise<GetUsersUseCaseResponse> {
+    const users = await this.usersRepository.findMany(role)
 
     return success({ users })
   }

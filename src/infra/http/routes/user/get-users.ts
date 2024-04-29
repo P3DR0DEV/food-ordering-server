@@ -4,7 +4,6 @@ import z from 'zod'
 
 import { UserPresenter } from '../../presenters/user'
 import { getUsersUseCase } from './factories/make-get-users'
-import { getUsersByRoleUseCase } from './factories/make-get-users-by-role'
 
 //! 'http://localhost:3333/users?role=ADMIN'
 export async function getUsersRoute(app: FastifyInstance) {
@@ -33,12 +32,11 @@ export async function getUsersRoute(app: FastifyInstance) {
     },
     async (request, reply) => {
       const { role } = request.query
-      let result
 
-      role ? (result = await getUsersByRoleUseCase.execute(role)) : (result = await getUsersUseCase.execute())
+      const result = await getUsersUseCase.execute(role)
 
       if (!result.hasSucceeded()) {
-        throw new Error(result.reason as string)
+        throw new Error()
       }
 
       const { users } = result.result

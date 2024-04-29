@@ -24,14 +24,12 @@ export class UsersInMemoryRepository implements UsersRepository {
     return user
   }
 
-  async findMany(): Promise<User[]> {
+  async findMany(role?: 'USER' | 'ADMIN'): Promise<User[]> {
+    if (role) {
+      return this.users.filter((user) => user.role === role)
+    }
+
     return this.users
-  }
-
-  async findManyByRole(role: 'ADMIN' | 'USER'): Promise<User[]> {
-    const users = this.users.filter((user) => user.role === role)
-
-    return users
   }
 
   async create(user: User): Promise<void> {
