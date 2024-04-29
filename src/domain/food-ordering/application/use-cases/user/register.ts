@@ -10,7 +10,7 @@ interface RegisterUserUseCaseRequest {
   name: string
   email: string
   password: string
-  role: 'ADMIN' | 'USER'
+  role?: 'ADMIN' | 'USER'
 }
 
 type RegisterUserUseCaseResponse = Either<BadRequest, { user: User }>
@@ -18,12 +18,7 @@ type RegisterUserUseCaseResponse = Either<BadRequest, { user: User }>
 export class RegisterUserUseCase implements UseCase {
   constructor(private readonly usersRepository: UsersRepository) {}
 
-  async execute({
-    name,
-    email,
-    password,
-    role = 'USER',
-  }: RegisterUserUseCaseRequest): Promise<RegisterUserUseCaseResponse> {
+  async execute({ name, email, password, role }: RegisterUserUseCaseRequest): Promise<RegisterUserUseCaseResponse> {
     const userExists = await this.usersRepository.findByEmail(email)
 
     if (userExists) {
