@@ -8,7 +8,7 @@ export interface OrdersProps {
   userId: string
   total: number
   status: 'NEW' | 'PREPARING' | 'DELIVERING' | 'DELIVERED' | 'CANCELLED'
-  OrderItems: OrderItems[]
+  orderItems: OrderItems[]
   createdAt: Date
   updatedAt?: Date | null
 }
@@ -38,12 +38,12 @@ export class Order extends Entity<OrdersProps> {
     return this.props.updatedAt
   }
 
-  get OrderItems() {
-    return this.props.OrderItems
+  get orderItems() {
+    return this.props.orderItems
   }
 
-  set OrderItems(orderItems: OrderItems[]) {
-    this.props.OrderItems = orderItems
+  set orderItems(orderItems: OrderItems[]) {
+    this.props.orderItems = orderItems
   }
 
   static create(props: Optional<OrdersProps, 'status' | 'createdAt'>, id?: UniqueEntityID) {

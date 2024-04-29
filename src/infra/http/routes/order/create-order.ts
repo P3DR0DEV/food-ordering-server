@@ -32,7 +32,7 @@ export async function createOrder(app: FastifyInstance) {
               status: z.string().optional(),
               userId: z.string(),
               createdAt: z.string(),
-              OrderItems: z.array(
+              orderItems: z.array(
                 z.object({
                   productId: z.string().uuid(),
                   quantity: z.number(),
@@ -52,7 +52,7 @@ export async function createOrder(app: FastifyInstance) {
         userId,
         total,
         status,
-        OrderItems: orderItems,
+        orderItems,
       })
 
       if (!result.hasSucceeded()) {

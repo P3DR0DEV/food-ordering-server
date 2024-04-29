@@ -5,12 +5,12 @@ import { Order } from '@/domain/food-ordering/enterprise/entities/order'
 import { OrderItems } from '@/domain/food-ordering/enterprise/entities/order-items'
 
 interface PrismaOrderWithItems extends PrismaOrder {
-  OrderItem: PrismaOrderItem[]
+  orderItem: PrismaOrderItem[]
 }
 
 export class PrismaOrderMapper {
   static toDomain(raw: PrismaOrderWithItems): Order {
-    const items = raw.OrderItem.map((item) => {
+    const items = raw.orderItem.map((item) => {
       return OrderItems.create(
         {
           orderId: item.orderId,
@@ -27,7 +27,7 @@ export class PrismaOrderMapper {
         userId: raw.userId,
         status: raw.status,
         total: raw.total,
-        OrderItems: items,
+        orderItems: items,
       },
       new UniqueEntityID(raw.id),
     )
@@ -39,7 +39,7 @@ export class PrismaOrderMapper {
       userId: order.userId,
       status: order.status,
       total: order.total,
-      OrderItem: order.OrderItems.map((item) => {
+      orderItem: order.orderItems.map((item) => {
         return {
           id: item.id.toString(),
           orderId: item.orderId,

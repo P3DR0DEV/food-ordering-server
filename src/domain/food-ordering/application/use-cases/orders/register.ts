@@ -10,7 +10,7 @@ type RegisterOrderUseCaseRequest = {
   userId: string
   total: number
   status?: 'NEW' | 'PREPARING' | 'DELIVERING' | 'DELIVERED' | 'CANCELLED'
-  OrderItems?: {
+  orderItems?: {
     productId: string
     quantity: number
     size: 'S' | 'M' | 'L' | 'XL' | 'XXL'
@@ -30,10 +30,10 @@ export class RegisterOrderUseCase implements UseCase {
       userId: props.userId,
       total: props.total,
       status: props.status ?? 'NEW',
-      OrderItems: [],
+      orderItems: [],
     })
 
-    const items = props.OrderItems?.map((item) => {
+    const items = props.orderItems?.map((item) => {
       return OrderItems.create({
         productId: item.productId,
         quantity: item.quantity,
@@ -45,7 +45,7 @@ export class RegisterOrderUseCase implements UseCase {
     await this.orderRepository.create(order)
     if (!items) return success({ order })
 
-    order.OrderItems = items
+    order.orderItems = items
 
     await this.orderItemsRepository.createMany(items)
     return success({ order })

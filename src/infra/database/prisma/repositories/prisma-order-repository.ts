@@ -9,7 +9,7 @@ export class PrismaOrderRepository implements OrderRepository {
   constructor(private prisma: PrismaClient) {}
 
   async findMany(): Promise<Order[]> {
-    const orders = await this.prisma.order.findMany({ include: { OrderItem: true } })
+    const orders = await this.prisma.order.findMany({ include: { orderItem: true } })
 
     return orders.map(PrismaOrderMapper.toDomain)
   }
@@ -17,7 +17,7 @@ export class PrismaOrderRepository implements OrderRepository {
   async findManyByUserId(userId: string): Promise<Order[]> {
     const orders = await this.prisma.order.findMany({
       where: { userId },
-      include: { OrderItem: true },
+      include: { orderItem: true },
     })
 
     return orders.map(PrismaOrderMapper.toDomain)
@@ -26,7 +26,7 @@ export class PrismaOrderRepository implements OrderRepository {
   async findManyByStatus(status: 'NEW' | 'PREPARING' | 'DELIVERING' | 'DELIVERED' | 'CANCELLED'): Promise<Order[]> {
     const orders = await this.prisma.order.findMany({
       where: { status },
-      include: { OrderItem: true },
+      include: { orderItem: true },
     })
 
     return orders.map(PrismaOrderMapper.toDomain)
@@ -39,7 +39,7 @@ export class PrismaOrderRepository implements OrderRepository {
     const order = await this.prisma.order.update({
       where: { id: orderId },
       data: { status },
-      include: { OrderItem: true },
+      include: { orderItem: true },
     })
 
     if (!order) {
@@ -52,7 +52,7 @@ export class PrismaOrderRepository implements OrderRepository {
   async findById(id: string): Promise<Order | null> {
     const order = await this.prisma.order.findUnique({
       where: { id },
-      include: { OrderItem: true },
+      include: { orderItem: true },
     })
 
     if (!order) {
@@ -71,9 +71,9 @@ export class PrismaOrderRepository implements OrderRepository {
         userId: data.userId,
         total: data.total,
         status: data.status,
-        OrderItem: {
+        orderItem: {
           createMany: {
-            data: data.OrderItem,
+            data: data.orderItem,
           },
         },
       },
