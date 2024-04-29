@@ -5,6 +5,8 @@ import fastifySwaggerUI from '@fastify/swagger-ui'
 import { fastify } from 'fastify'
 import { jsonSchemaTransform, serializerCompiler, validatorCompiler } from 'fastify-type-provider-zod'
 
+import { env } from '@/env'
+
 import { errorHandler } from './error-handler'
 import { ordersRoutes, productsRoutes, signIn, usersRoutes } from './routes'
 
@@ -54,6 +56,6 @@ app.register(ordersRoutes)
 
 app.setErrorHandler(errorHandler)
 
-app.listen({ port: 3333, host: '0.0.0.0' }).then(() => {
+app.listen({ port: env.PORT, host: '0.0.0.0' }).then(() => {
   console.log('[server] HTTP server listening on port 3333')
 })
