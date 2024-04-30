@@ -50,7 +50,7 @@ export async function signIn(app: FastifyInstance) {
 
       const token = app.jwt.sign({
         id: user.id.toString(),
-        isAdmin: user.role === 'ADMIN',
+        isAdmin: user.role === 'admin',
         email: user.email,
       })
       return reply.status(200).send({ token })

@@ -9,6 +9,7 @@ import { env } from '@/env'
 
 import { errorHandler } from './error-handler'
 import { ordersRoutes, productsRoutes, signIn, usersRoutes } from './routes'
+import { signUp } from './routes/auth/sign-up'
 
 const app = fastify({ logger: { level: 'warn' } })
 
@@ -49,6 +50,7 @@ app.register(jwt, {
   },
 })
 
+app.register(signUp)
 app.register(signIn)
 app.register(usersRoutes)
 app.register(productsRoutes)

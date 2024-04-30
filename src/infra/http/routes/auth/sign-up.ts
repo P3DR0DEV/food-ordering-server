@@ -5,9 +5,9 @@ import z from 'zod'
 import { BadRequest } from '@/core/errors/bad-request'
 
 import { UserPresenter } from '../../presenters/user'
-import { registerUserUseCase } from './factories/make-create-user'
+import { registerUserUseCase } from '../user/factories/make-create-user'
 
-export async function createUserRoute(app: FastifyInstance) {
+export async function signUp(app: FastifyInstance) {
   app.withTypeProvider<ZodTypeProvider>().post(
     '/users',
     {
