@@ -9,7 +9,7 @@ import { registerUserUseCase } from '../user/factories/make-create-user'
 
 export async function signUp(app: FastifyInstance) {
   app.withTypeProvider<ZodTypeProvider>().post(
-    '/users',
+    '/sign-up',
     {
       schema: {
         summary: 'Create a User',
