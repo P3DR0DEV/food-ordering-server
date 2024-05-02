@@ -48,11 +48,12 @@ export async function signIn(app: FastifyInstance) {
         throw new BadRequest('Invalid password')
       }
 
-      const token = app.jwt.sign({
+      const token = await reply.jwtSign({
         id: user.id.toString(),
         isAdmin: user.role === 'admin',
-        email: user.email,
+        name: user.name,
       })
+
       return reply.status(200).send({ token })
     },
   )

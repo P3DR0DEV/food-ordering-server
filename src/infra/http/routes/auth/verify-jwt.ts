@@ -1,11 +1,13 @@
-import { FastifyReply, FastifyRequest } from 'fastify'
+import fastifyPlugin from 'fastify-plugin'
 
-export async function verifyJwt(request: FastifyRequest, reply: FastifyReply) {
-  try {
-    await request.jwtVerify()
-  } catch (err) {
-    return reply.status(401).send({
-      message: 'Unauthorized',
-    })
-  }
-}
+import { Unauthorized } from '../_errors/unauthorized'
+
+export const auth = fastifyPlugin(async (app) => {
+  app.addHook('preHandler', async (request) => {
+    try {
+      await request.jwtVerify()
+    } catch {
+      throw new Unauthorized('Invalid token')
+    }
+  })
+})
