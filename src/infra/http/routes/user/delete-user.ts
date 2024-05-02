@@ -4,39 +4,53 @@ import z from 'zod'
 
 import { BadRequest } from '@/core/errors/bad-request'
 
+import { Unauthorized } from '../_errors/unauthorized'
+import { auth } from '../auth/verify-jwt'
 import { deleteUserUseCase } from './factories/make-delete-user'
 
 export async function deleteUserRoute(app: FastifyInstance) {
-  app.withTypeProvider<ZodTypeProvider>().delete(
-    '/users/:id',
-    {
-      schema: {
-        summary: 'Delete User',
-        tags: ['User'],
-        params: z.object({
-          id: z.string(),
-        }),
-        response: {
-          200: z.object({
-            message: z.string(),
+  app
+    .withTypeProvider<ZodTypeProvider>()
+    .register(auth)
+    .delete(
+      '/users/:id',
+      {
+        schema: {
+          summary: 'Delete User',
+          tags: ['User'],
+          params: z.object({
+            id: z.string(),
           }),
+          headers: z.object({
+            authorization: z.string(),
+          }),
+          response: {
+            200: z.object({
+              message: z.string(),
+            }),
+          },
         },
       },
-    },
-    async (request, reply) => {
-      const { id } = request.params
-      const result = await deleteUserUseCase.execute(id)
+      async (request, reply) => {
+        const { id } = request.params
+        const { isAdmin, id: userId } = request.user
 
-      if (!result.hasSucceeded()) {
-        const { reason } = result
-        if (reason instanceof BadRequest) {
-          throw new BadRequest(reason.message)
+        if (id !== userId && !isAdmin) {
+          throw new Unauthorized('Invalid Operation')
         }
 
-        throw new Error(reason)
-      }
+        const result = await deleteUserUseCase.execute(id)
 
-      return reply.status(200).send({ message: result.result.message })
-    },
-  )
+        if (!result.hasSucceeded()) {
+          const { reason } = result
+          if (reason instanceof BadRequest) {
+            throw new BadRequest(reason.message)
+          }
+
+          throw new Error(reason)
+        }
+
+        return reply.status(200).send({ message: result.result.message })
+      },
+    )
 }
